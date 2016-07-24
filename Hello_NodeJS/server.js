@@ -5,6 +5,12 @@ var http    = require("http"),
 function start(PORT, route, handle) {
 
     function onRequest(request, response) {
+        var pathname = url.parse(request.url).pathname;
+        DEBUG && console.log("Request for " + pathname + " received.");
+        route(handle, pathname, response, request);
+    }
+    /*
+    function onRequest(request, response) {
         var postData = "",
             pathname = url.parse(request.url).pathname;
         
@@ -21,6 +27,7 @@ function start(PORT, route, handle) {
             route(handle, pathname, response, postData);
         });
     }
+    */
 
     http.createServer(onRequest).listen(PORT);
     DEBUG && console.log("Server on port " + PORT + " started OK");

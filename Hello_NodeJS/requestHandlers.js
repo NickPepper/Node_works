@@ -1,13 +1,31 @@
 var DEBUG       = require("./settings").DEBUG,
     //exec      = require("child_process").exec,
     querystring = require("querystring"),
-    fs          = require("fs");
+    fs          = require("fs"),
+    formidable  = require("formidable");
 
 
 function start(response, postData) {
     DEBUG && console.log("Request handler 'start' was called.");
 
     // TODO: REFACTORING - not the best idea to mix view into the logic
+     var body = '<!DOCTYPE html>\n'+
+        '<html>\n'+
+        '<head>\n'+
+        '\t<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n'+
+        '\t<title>Pepper Node</title>\n'+
+        '</head>\n'+
+        '<body>\n'+
+        '\t<p><a href="/">Home</a> <a href="/start">Start</a> <a href="/upload">Upload</a> <a href="/show">Show</a></p>\n'+
+        '\t<br/><br/>\n'+
+        '\t<p>Oтправить на сервак файл (пока что только картинки в формате .PNG):</p>\n'+
+        '\t<form action="/upload" enctype="multipart/form-data" method="post">\n'+
+        '\t\t<input type="file" name="upload" multiple="multiple" />\n'+
+        '\t\t<input type="submit" value="Upload file" />\n'+
+        '\t</form>\n'+
+        '</body>\n'+
+        '</html>';
+    /*
     var body = '<!DOCTYPE html>\n'+
         '<html>\n'+
         '<head>\n'+
@@ -26,7 +44,7 @@ function start(response, postData) {
         '\t</form>\n'+
         '</body>\n'+
         '</html>';
-
+    */
     response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
     response.write(body);
     response.end();
@@ -51,13 +69,33 @@ function start(response, postData) {
 */
 }
 
-
+function upload(response, request) {
+    DEBUG && console.log("Request handler 'upload' was called.");
+    var form = new formidable.IncomingForm();
+    DEBUG && console.log("formidable :: about to parse");
+    form.parse(request, function(error, fields, files) {
+        DEBUG && console.log("formidable :: parsing done");
+        // Возможна ошибка в Windows: попытка переименования уже существующего файла
+        fs.rename(files.upload.path, "./tmp/test.png", function(err) {
+        if (err) {
+            fs.unlink("./tmp/test.png");
+            fs.rename(files.upload.path, "./tmp/test.png");
+        }
+        });
+        response.writeHead(200, {"Content-Type": "text/html"});
+        response.write("Received image:<br/>");
+        response.write("<img src='./show' />");
+        response.end();
+    });
+}
+/*
 function upload(response, postData) {
     DEBUG && console.log("Request handler 'upload' was called.");
     response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
     response.write("<h3>Мне прислано постом:</h3><div>" + querystring.parse(postData).text + "</div>");
     response.end();
 }
+*/
 
 
 function show(response, postData) {
