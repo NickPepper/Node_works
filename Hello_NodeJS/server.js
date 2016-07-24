@@ -1,6 +1,6 @@
-var http = require("http");
-var url = require("url");
-var DEBUG = require("./settings").DEBUG;
+var http    = require("http"),
+    url     = require("url"),
+    DEBUG   = require("./settings").DEBUG;
 
 function start(PORT, route, handle) {
 
