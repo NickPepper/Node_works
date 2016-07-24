@@ -1,17 +1,17 @@
 var http = require("http");
 var url = require("url");
+var DEBUG = require("./settings").DEBUG;
 
-function start(route, handle) {
-	var PORT = 1967;
+function start(PORT, route, handle) {
 
 	function onRequest(request, response) {
 	  	var pathname = url.parse(request.url).pathname;
-    	console.log("Request for " + pathname + " received");
+    	DEBUG && console.log("Request for " + pathname + " received");
     	route(handle, pathname, response);
 	}
 
 	http.createServer(onRequest).listen(PORT);
-	console.log("Server on port "+PORT+" started OK");
+	DEBUG && console.log("Server on port " + PORT + " started OK");
 
 }
 
