@@ -1,13 +1,13 @@
 var http = require("http");
 var url = require("url");
 
-function start(route) {
+function start(route, handle) {
 	var PORT = 1967;
 
 	function onRequest(request, response) {
 	  	var pathname = url.parse(request.url).pathname;
     	console.log("Request for " + pathname + " received");
-    	route(pathname);
+    	route(handle, pathname);
 	  	response.writeHead(200, {"Content-Type": "text/plain; charset=utf-8"});
 	  	response.write("Hello from Nick Pepper's Node.js server!\nТест кириллицы норм?");
 	  	//response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
