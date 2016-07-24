@@ -4,8 +4,9 @@ var server          = require("./server"),
     settings        = require("./settings"),
     handle          = {};
 
-handle["/"] = requestHandlers.start;
-handle["/start"] = requestHandlers.start;
-handle["/upload"] = requestHandlers.upload;
+handle["/"]         = requestHandlers.start;
+handle["/start"]    = requestHandlers.start;
+handle["/upload"]   = requestHandlers.upload;
+handle["/show"]     = requestHandlers.show;
 
 server.start(settings.PORT, router.route, handle);
