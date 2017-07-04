@@ -14,9 +14,14 @@ app.use(bodyParser.json());
 var routes = require('./api/routes/todoListRoutes');
 routes(app);
 
+// incorrect URLs handler
+app.use(function(req, res) {
+    res.status(404).send({url: req.originalUrl + ' not found'})
+});
+
 app.listen(port);
 
 console.log('todo list RESTful API server started on: ' + port);
 
-// mongod --dbpath /Users/nikolaipershin/Mongo/data/db
-// npm run start
+// $ mongod --dbpath /Users/nikolaipershin/Mongo/data/db
+// $ npm run start
