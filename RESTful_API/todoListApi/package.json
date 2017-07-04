@@ -23,6 +23,7 @@
     "example"
   ],
   "dependencies": {
+    "express": "^4.15.3",
     "gulp": "^3.9.1"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
     "gulp-sourcemaps": "^2.1.1",
     "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^2.0.1",
+    "nodemon": "^1.11.0",
     "jshint": "^2.9.3",
     "jshint-stylish": "^2.2.1",
     "require-dir": "^0.3.1",
