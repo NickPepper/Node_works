@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 var TaskSchema = new Schema({
     name: {
         type: String,
-        Required: 'Kindly enter the name of the task'
+        Required: 'You must enter the name of the task'
     },
     Created_date: {
         type: Date,
