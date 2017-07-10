@@ -5,7 +5,8 @@ let express     = require('express'),
     port        = process.env.PORT || 3333,
     mongoose    = require('mongoose'),
     Task        = require('./api/models/todoListModel'),
-    bodyParser  = require('body-parser');
+    bodyParser  = require('body-parser'),
+    routes      = require('./api/routes/todoListRoutes');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/Tododb', {useMongoClient: true}); 
@@ -13,7 +14,6 @@ mongoose.connect('mongodb://localhost/Tododb', {useMongoClient: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-let routes = require('./api/routes/todoListRoutes');
 routes(app);
 
 // incorrect URLs handler
